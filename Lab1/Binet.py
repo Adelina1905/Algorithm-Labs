@@ -11,7 +11,7 @@ def fibonacci(n):
 
 def performance_binet():
     # you can change these, but keep in mind float precision breaks for large n
-    test_numbers = [0, 5, 7, 10, 12, 15, 17, 20, 22, 25, 27, 30, 32, 35, 37, 40, 42, 45]
+    test_numbers = [5, 7, 10, 12, 15, 17, 20, 22, 25, 27, 30, 32, 35, 37, 40, 42, 45]
     repeats = 5
 
     times_ms = []

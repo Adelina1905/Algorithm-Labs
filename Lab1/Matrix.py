@@ -42,7 +42,7 @@ def nthFibonacci(n):
 
 def performance():
     # use the same values as in your plot (edit if needed)
-    test_numbers = [0, 500, 1000, 2000, 4000, 6000, 8000, 10000, 12000, 14000, 16000]
+    test_numbers = [501, 631, 794, 1000, 1259, 1585, 1995, 2512, 3162, 3981, 5012, 6310, 7943, 10000, 12589, 15849]
 
     repeats = 5          # average makes it smoother; set to 1 for spikier
     warmup_runs = 1      # warmup helps reduce first-run weird spikes

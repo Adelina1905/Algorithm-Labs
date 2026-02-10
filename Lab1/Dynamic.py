@@ -16,7 +16,7 @@ def nthFibonacci(n):
     return dp[n]
 
 def performance():
-    test_numbers = [1000, 5000, 10000, 20000, 50000, 100000]
+    test_numbers = [501, 631, 794, 1000, 1259, 1585, 1995, 2512, 3162, 3981, 5012, 6310, 7943, 10000, 12589, 15849]
     repeats = 5
 
     dp_times = []

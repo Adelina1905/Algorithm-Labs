@@ -8,7 +8,7 @@ def nth_fibonacci(n):
     return nth_fibonacci(n-1) + nth_fibonacci(n-2)
 
 def performance():
-    test_numbers = [5, 10, 15, 20, 25, 30]
+    test_numbers = [5, 7, 10, 12, 15, 17, 20, 22, 25, 27, 30, 32, 35, 37, 40, 42, 45]
     repeats = 3
     naive_times = []
     naive_calls = []

@@ -1,38 +1,28 @@
 import time
 import matplotlib.pyplot as plt
+# (Public) Returns F(n).
+def fibonacci(n):
+	if n < 0:
+		raise ValueError("Negative arguments not implemented")
+	return _fib(n)[0]
 
-MOD = 1000000007
 
-def FastDoubling(n, res):
-    if n == 0:
-        res[0] = 0
-        res[1] = 1
-        return
-
-    FastDoubling(n // 2, res)
-
-    a = res[0]  # F(k)
-    b = res[1]  # F(k+1)
-
-    c = (2 * b - a) % MOD              # (2F(k+1) - F(k)) mod
-    c = (a * c) % MOD                  # F(2k)
-    d = (a * a + b * b) % MOD          # F(2k+1)
-
-    if n % 2 == 0:
-        res[0] = c
-        res[1] = d
-    else:
-        res[0] = d
-        res[1] = (c + d) % MOD         # IMPORTANT: mod here
-
-def fib_fast_doubling_mod(n: int) -> int:
-    res = [0, 0]
-    FastDoubling(n, res)
-    return res[0]
+# (Private) Returns the tuple (F(n), F(n+1)).
+def _fib(n):
+	if n == 0:
+		return (0, 1)
+	else:
+		a, b = _fib(n // 2)
+		c = a * (b * 2 - a)
+		d = a * a + b * b
+		if n % 2 == 0:
+			return (c, d)
+		else:
+			return (d, c + d)
 
 def performance_fast_doubling():
     # fast doubling is O(log n), so use BIG n
-    test_numbers = [0, 10, 100, 1_000, 10_000, 100_000, 1_000_000, 10_000_000]
+    test_numbers = [501, 631, 794, 1000, 1259, 1585, 1995, 2512, 3162, 3981, 5012, 6310, 7943, 10000, 12589, 15849]
     repeats = 10
 
     times_ms = []
@@ -47,7 +37,7 @@ def performance_fast_doubling():
 
         for _ in range(repeats):
             start = time.perf_counter()
-            value = fib_fast_doubling_mod(n)
+            value = fibonacci(n)
             end = time.perf_counter()
             execs.append((end - start) * 1000)
 
@@ -55,7 +45,7 @@ def performance_fast_doubling():
         times_ms.append(avg)
 
         print(
-            f"{n:<12} {value:<16} "
+            f"{n:<12} "
             + "  ".join(f"{t:>10.6f}" for t in execs)
             + f"  {avg:>10.6f}"
         )
