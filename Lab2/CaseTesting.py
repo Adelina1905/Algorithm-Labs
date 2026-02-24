@@ -20,13 +20,14 @@ def gen_sorted_descending(n):
     return list(range(n, 0, -1))
 
 def gen_negative_numbers(n):
-    return [random.randint(-100000, 0) for _ in range(n)]
+    return [random.randint(-10_000, -1) for _ in range(n)]
 
 def gen_floating_point(n):
-    return [random.uniform(0, 100000) for _ in range(n)]
+    return [random.uniform(-1000.0, 1000.0) for _ in range(n)]
 
 def gen_complex_magnitudes(n):
-    return [complex(random.randint(0, 1000), random.randint(0, 1000)) for _ in range(n)]
+    return [abs(complex(random.uniform(-100, 100), random.uniform(-100, 100)))
+            for _ in range(n)]
 
 def gen_nearly_sorted(n):
     arr = list(range(n))
@@ -78,9 +79,13 @@ SORTS = {
     "Count Sort": count_sort
 }
 
-def run_all_cases():
-    for case_name, generator in INPUT_TYPES.items():
+def run_all_cases_subplots():
+    fig, axes = plt.subplots(2, 4, figsize=(20, 10))
+    axes = axes.flatten()
+
+    for idx, (case_name, generator) in enumerate(INPUT_TYPES.items()):
         print(f"\n=== CASE: {case_name} ===")
+
         results = {name: [] for name in SORTS.keys()}
 
         for n in sizes:
@@ -91,28 +96,24 @@ def run_all_cases():
                 try:
                     t = measure_time_avg(sort_func, arr)
                 except Exception as e:
-                    t = None  # If it fails (e.g., counting sort with floats/complex)
+                    t = None
                     print(f"{sort_name} failed on {case_name} with size {n}: {e}")
                 results[sort_name].append(t)
 
-        plot_results(results, case_name)
+        ax = axes[idx]
 
-# =========================================================
-# 🔹 PLOT FUNCTION
-# =========================================================
+        for sort_name, times in results.items():
+            if any(t is None for t in times):
+                continue
+            ax.plot(sizes, times, label=sort_name)
 
-def plot_results(results, title):
-    plt.figure(figsize=(10, 6))
-    for sort_name, times in results.items():
-        # Skip None values
-        if any(t is None for t in times):
-            continue
-        plt.plot(sizes, times, label=sort_name)
-    plt.xlabel("Input Size (n)")
-    plt.ylabel("Time (seconds)")
-    plt.title(f"Sorting Performance — {title}")
-    plt.legend()
-    plt.grid(True)
+        ax.set_title(case_name)
+        ax.set_xlabel("Input Size (n)")
+        ax.set_ylabel("Time (seconds)")
+        ax.grid(True)
+        ax.legend(fontsize=7)
+
+    plt.suptitle("Sorting Performance Across Input Types", fontsize=16)
     plt.tight_layout()
     plt.show()
 
@@ -121,4 +122,4 @@ def plot_results(results, title):
 # =========================================================
 
 if __name__ == "__main__":
-    run_all_cases()
+    run_all_cases_subplots()
