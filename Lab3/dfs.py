@@ -1,4 +1,3 @@
-from collections import defaultdict
 
 def dfsRec(adj, visited, s, res):
     visited[s] = True
@@ -20,4 +19,5 @@ def dfs(adj):
         if not visited[i]:
             dfsRec(adj, visited, i, res)
     return res
+
 

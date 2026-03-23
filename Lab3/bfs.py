@@ -27,3 +27,4 @@ def bfs(adj):
         if not visited[i]:
             bfsConnected(adj, i, visited, res)
     return res
+
